@@ -1,0 +1,43 @@
+version: '1.0'
+
+services: 
+  userservice:
+    build: .
+    container_name: userservice
+    expose:
+      - 4000
+    ports:
+      - "4000"
+    depends_on:
+      postgres-db: 
+        condition: service_started
+    environment:
+      - ConnectionStrings__DefaultConnection="Host=db;Database=postgres;Username=postgres;Password=postgres"
+    networks:
+      - user-service-local 
+
+  postgres-db:
+    restart: always
+    image: postgres
+    container_name: postgres-container-test
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      retries: 5
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=users
+    networks:
+      - user-service-local 
+
+
+networks:
+  user-service-local:
+    external: false
+volumes:
+  db-data:
