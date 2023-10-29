@@ -1,10 +1,9 @@
-using Microsoft.EntityFrameworkCore;
 using UserService.Repository;
 using UserService.Repository.EfCore;
 using UserService.Service;
-using Domains
+using Domains;
+using Microsoft.EntityFrameworkCore;
 
-;
 using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
