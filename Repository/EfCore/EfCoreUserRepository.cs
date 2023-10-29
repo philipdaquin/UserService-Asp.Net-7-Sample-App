@@ -8,8 +8,6 @@ namespace UserService.Repository.EfCore
 {
     public class EfCoreUserRepository : EfCoreRepository<int, User, UserContext>
     {
-        public EfCoreUserRepository(UserContext context) : base(context)
-        {
-        }
+        public EfCoreUserRepository(UserContext context) : base(context) {}
     }
 }

@@ -6,14 +6,16 @@ using Domains;
 using UserService.Repository.EfCore;
 
 namespace UserService.Service;
-public class UserService
+public class UserService: IUserService
 {
-    private readonly EfCoreUserRepository repository;
-    private readonly ILogger<UserService> logger;
+    private EfCoreUserRepository repository;
+    // private ILogger<UserService> logger;
 
-    public UserService(EfCoreUserRepository repository, ILogger<UserService> _logger) { 
-        repository = repository;
-        logger = _logger;
+    public UserService(EfCoreUserRepository repository 
+    // ILogger<UserService> _logger
+    ) { 
+        this.repository = repository;
+        // this.logger = _logger;
     }
 
     /// <summary>
@@ -23,6 +25,7 @@ public class UserService
     /// 
     /// <returns>the entity: `User`</returns>
     public async Task<User?> FindOne(int Id) {
+        // logger.LogInformation("Find the User entity");
         return await repository.FindOneById(Id);
     }
 
@@ -31,7 +34,7 @@ public class UserService
     /// </summary>
     /// <returns>the list of entities</returns>
     public async Task<List<User>> FindAll() {
-        logger.LogInformation("Retrieving all entities ");
+        // logger.LogInformation("Retrieving all entities ");
 
         return await repository.FindAll();
     }
@@ -42,7 +45,7 @@ public class UserService
     /// <param name="user">entity to save</param>
     /// <returns>persisted entity</returns>
     public async Task<User> Save(User user) {
-        logger.LogInformation("Saving User {} into Database", user);
+        // logger.LogInformation("Saving User {} into Database", user);
 
         await repository.Save(user);
 
@@ -56,7 +59,7 @@ public class UserService
     /// <param name="newUser">the entity to update partially</param>
     /// <returns>the persisted entity</returns>
     public async Task<User?> PartialUpdate(User newUser) { 
-        logger.LogInformation("Request to partial update User: {}", newUser);
+        // logger.LogInformation("Request to partial update User: {}", newUser);
 
         User? currentUser = await repository.FindOneById(newUser.Id);
         // Check if the item exists on the database 
@@ -75,7 +78,7 @@ public class UserService
     /// <param name="Id">entity id</param>
     /// <returns>boolean</returns>
     public async Task<bool> DeleteOne(int Id) {    
-        logger.LogInformation("Request to delete User");
+        // logger.LogInformation("Request to delete User");
 
         return await repository.DeleteById(Id);
     }

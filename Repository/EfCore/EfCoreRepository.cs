@@ -12,7 +12,7 @@ namespace UserService.Repository.EfCore
         where DContext : DbContext
     {
 
-        private readonly DContext context;
+        private DContext context;
 
         public EfCoreRepository(DContext context) { 
             this.context = context;
@@ -29,6 +29,11 @@ namespace UserService.Repository.EfCore
             await context.SaveChangesAsync();
             
             return true;
+        }
+
+        public async Task<bool> ExistsById(Key id)
+        {
+            return await context.Set<TEntity>().FindAsync(id) == null;
         }
 
         public async Task<List<TEntity>> FindAll()

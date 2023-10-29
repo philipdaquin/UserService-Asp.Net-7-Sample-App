@@ -5,10 +5,11 @@ using UserService.Repository;
 namespace Domains;
 
 
-[Table("users")]
+[Table("user")]
 public class User: IEntity<int>
 {
     [Key]
+    [Column("id")]
     public int Id { get; set; }
 
     [Column(name: "name", TypeName = "nvarchar(50)")]

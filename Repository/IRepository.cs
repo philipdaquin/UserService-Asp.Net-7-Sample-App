@@ -33,5 +33,12 @@ namespace UserService.Repository
         /// <param name="id">Primary Key</param>
         /// <returns>returns Entity</returns>
         Task<Boolean> DeleteById(K id);
+
+        /// <summary>
+        /// Checks if the entity exists by Id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<Boolean> ExistsById(K id);
     }
 }
