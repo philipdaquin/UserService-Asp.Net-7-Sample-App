@@ -40,25 +40,33 @@ public class UserController : ControllerBase
 
     [HttpGet("/users/{id}")]
     public async Task<ActionResult<User>> GetUser(int id) {
-        return await service.FindOne(id);
+        var user = await service.FindOne(id);
+
+        return Ok(user);
     }
     [HttpGet("/users")]
     public async Task<ActionResult<List<User>>> GetAllUsers() {
-        return await service.FindAll();
+        var users = await service.FindAll();
+        return Ok(users);
     }
 
     [HttpPost("/users")]
     public async Task<ActionResult<User>> SaveUser(User user) {
-        return await service.Save(user);
+        var newUser = await service.Save(user);
+
+        return Ok(newUser);
     }
     [HttpPut("/users/{id}")]
     public async Task<ActionResult<User?>> PartialUpdateUser(User newUser, int id) {
         // if (await repository.ExistsById(newUser.Id)) return BadRequest("Missing Entity");
 
-        return await service.PartialUpdate(newUser);
+        var updated = await service.PartialUpdate(newUser);
+        return Ok(updated);
     }
     [HttpDelete("/users/{id}")]
     public async Task<ActionResult<Boolean>> DeleteUser(int Id) {
-        return await service.DeleteOne(Id);
+        var isDeleted  = await service.DeleteOne(Id);
+
+        return Ok(isDeleted);
     }
 }

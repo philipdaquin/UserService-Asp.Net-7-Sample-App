@@ -5,6 +5,7 @@ using UserService.Service;
 using Domains
 
 ;
+using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
@@ -12,7 +13,11 @@ services.AddScoped<EfCoreUserRepository>();
 services.AddScoped<IUserService, UserService.Service.UserService>();
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(policy => { 
+        policy.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        policy.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+    });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -21,8 +26,8 @@ string connectionString = config.GetConnectionString("DefaultConnection") ?? thr
 
 // Add services to the container.
 builder.Services.AddDbContext<UserContext>(options=> {
-    options.UseNpgsql(connectionString);
-
+    options.UseNpgsql(connectionString).UseUpperSnakeCaseNamingConvention();
+    // options.UseSqlServer(connectionString).UseUpperSnakeCaseNamingConvention();
      }, ServiceLifetime.Transient);
 builder.Services.AddControllersWithViews();
 var app = builder.Build();
@@ -36,7 +41,12 @@ if (app.Environment.IsDevelopment())
 
 
 app.UseHttpsRedirection();
-
+app.UseCors(
+    policy => policy    
+        .AllowAnyOrigin()
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+);
 app.UseAuthorization();
 
 app.MapControllers();
