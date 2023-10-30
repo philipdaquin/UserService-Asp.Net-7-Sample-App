@@ -22,9 +22,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\UserService.Tests\UserService.Tests.csproj" />
-  </ItemGroup>
-
-
 </Project>
