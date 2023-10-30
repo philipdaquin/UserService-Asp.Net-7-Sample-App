@@ -18,6 +18,7 @@ public class UserService: IUserService
         // this.logger = _logger;
     }
 
+
     /// <summary>
     /// Get one User by Id
     /// </summary>
@@ -58,7 +59,7 @@ public class UserService: IUserService
     /// </summary>
     /// <param name="newUser">the entity to update partially</param>
     /// <returns>the persisted entity</returns>
-    public async Task<User?> PartialUpdate(User newUser) { 
+    public async Task<User?> PartialUpdate(User newUser, int userId) { 
         // logger.LogInformation("Request to partial update User: {}", newUser);
 
         User? currentUser = await repository.FindOneById(newUser.Id);

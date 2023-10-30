@@ -8,8 +8,8 @@ using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
-services.AddScoped<EfCoreUserRepository>();
-services.AddScoped<IUserService, UserService.Service.UserService>();
+
+ConfigureServices(services);
 
 
 builder.Services.AddControllers()
@@ -53,3 +53,11 @@ app.MapControllers();
 app.Run();
 
 
+
+
+void ConfigureServices(IServiceCollection services) { 
+    services.AddScoped<EfCoreUserRepository>();
+    services.AddTransient<IUserService, UserService.Service.UserService>();
+
+
+}

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Domains;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using UserService.Repository;
@@ -17,12 +18,10 @@ public class UserController : ControllerBase
 
     private readonly IUserService service;
     // private UserService.Service.UserService service;
-
     // private EfCoreUserRepository repository;
-    // private ILogger<UserController> logger;
+    private static ILogger<UserController> logger;
 
     public UserController(
-        // ILogger<UserController> logger,
         // EfCoreUserRepository repository, 
         IUserService service 
         ) { 
@@ -39,32 +38,51 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("/users/{id}")]
-    public async Task<ActionResult<User>> GetUser(int id) {
+    public async Task<IActionResult> GetUser(int id) {
+        logger.LogInformation("Received GetUser request");
         var user = await service.FindOne(id);
 
         return Ok(user);
     }
     [HttpGet("/users")]
-    public async Task<ActionResult<List<User>>> GetAllUsers() {
+    public async Task<IActionResult> GetAllUsers() {
+        logger.LogInformation("Received GetAllUsers request");
+
         var users = await service.FindAll();
+
+        if (!users.Any()) return NotFound(); 
+
+
         return Ok(users);
     }
 
     [HttpPost("/users")]
-    public async Task<ActionResult<User>> SaveUser(User user) {
-        var newUser = await service.Save(user);
+    public async Task<IActionResult> SaveUser(User user) {
+        logger.LogInformation("Saving User to the Database");
 
+        var newUser = await service.Save(user);
+        
         return Ok(newUser);
     }
     [HttpPut("/users/{id}")]
-    public async Task<ActionResult<User?>> PartialUpdateUser(User newUser, int id) {
-        // if (await repository.ExistsById(newUser.Id)) return BadRequest("Missing Entity");
+    public async Task<IActionResult> PartialUpdateUser(User newUser, int id) {
 
-        var updated = await service.PartialUpdate(newUser);
+        // logger.LogInformation("Received a PartialUpdate");
+
+        // Check if the user exists in the Database         
+        // if (await service.FindOne(id) == null) return NotFound("Missing Entity");
+
+        // Check if the ID is the same
+        if (newUser.Id != id) return BadRequest("Given Ids Do Not Match");
+
+        var updated = await service.PartialUpdate(newUser, id);
         return Ok(updated);
     }
     [HttpDelete("/users/{id}")]
-    public async Task<ActionResult<Boolean>> DeleteUser(int Id) {
+    public async Task<IActionResult> DeleteUser(int Id) {
+        // logger.LogInformation("Received Delete Request to the User");
+        if (await service.FindOne(Id) == null) return BadRequest("Given Ids Do Not Match");
+
         var isDeleted  = await service.DeleteOne(Id);
 
         return Ok(isDeleted);
