@@ -47,7 +47,7 @@ public class IntegrationTestRepository<TProgram, TDBContext>: WebApplicationFact
             services.EnsureDbCreated<UserContext>();
             
             // Add Service
-            services.AddTransient<IUserService, UserService.Service.UserService>();
+            services.AddScoped<IUserService, UserService.Service.UserService>();
         });
     }
 

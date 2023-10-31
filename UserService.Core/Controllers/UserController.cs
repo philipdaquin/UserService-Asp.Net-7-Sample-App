@@ -39,7 +39,7 @@ public class UserController : ControllerBase
 
     [HttpGet("/users/{id}")]
     public async Task<IActionResult> GetUser(int id) {
-        logger.LogInformation("Received GetUser request");
+        // logger.LogInformation("Received GetUser request");
         var user = await service.FindOne(id);
 
         return Ok(user);
