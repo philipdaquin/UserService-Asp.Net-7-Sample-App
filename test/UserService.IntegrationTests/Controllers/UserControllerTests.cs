@@ -9,6 +9,8 @@ using Xunit;
 using Moq;
 using Domains;
 using UserService.Service;
+using System.Text.Json;
+using System.Text;
 
 /*
     Integration Test with External Client 
@@ -39,14 +41,16 @@ namespace UserService.IntegrationTests.Controllers
             string testUrl = $"api/users/1";
             
             User expectedUser = new User {
-                Id = userId, 
+                // Id = userId, 
                 Name = "Test User",
                 Email = "Test@Email.com"
             };
+            var content = new StringContent(JsonSerializer.Serialize(expectedUser), Encoding.UTF8, "application/json");
 
-            var mockUserService = new Mock<IUserService>();
-            mockUserService.Setup(service => service.FindOne(userId))
-                .ReturnsAsync(expectedUser);
+            // var mockUserService = new Mock<IUserService>();
+            var postrequest = await webClient.PostAsync("api/users", content);
+            // mockUserService.Setup(service => service.FindOne(userId))
+            //     .ReturnsAsync(expectedUser);
 
             var response = await webClient.GetAsync(testUrl);
             // response.EnsureSuccessStatusCode();
