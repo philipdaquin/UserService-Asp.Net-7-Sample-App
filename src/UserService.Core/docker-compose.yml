@@ -1,18 +1,17 @@
 version: '1.0'
 
 services: 
-  userservice:
-    build: ./src/UserService.Core
-    container_name: userservice
-    expose:
-      - 4000
+  user-service:
+    build: .
+    container_name: user-service
     ports:
-      - "4000"
+      - "4000:4000"
     depends_on:
       postgres-db: 
         condition: service_started
     environment:
-      - ConnectionStrings__DefaultConnection="Host=postgres-db;Database=postgres;Username=postgres;Password=postgres"
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_ENVIRONMENT=Development
     networks:
       - user-service-local 
 
@@ -31,7 +30,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=users
+      - POSTGRES_DB=userservice
     networks:
       - user-service-local 
 

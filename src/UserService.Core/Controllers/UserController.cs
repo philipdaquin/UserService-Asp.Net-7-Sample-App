@@ -19,7 +19,7 @@ public class UserController : ControllerBase
     private readonly IUserService service;
     // private UserService.Service.UserService service;
     // private EfCoreUserRepository repository;
-    private static ILogger<UserController> logger;
+    // private static ILogger<UserController> logger;
 
     public UserController(
         // EfCoreUserRepository repository, 
@@ -46,7 +46,7 @@ public class UserController : ControllerBase
     }
     [HttpGet("/users")]
     public async Task<IActionResult> GetAllUsers() {
-        logger.LogInformation("Received GetAllUsers request");
+        // logger.LogInformation("Received GetAllUsers request");
 
         var users = await service.FindAll();
 
@@ -58,7 +58,7 @@ public class UserController : ControllerBase
 
     [HttpPost("/users")]
     public async Task<IActionResult> SaveUser(User user) {
-        logger.LogInformation("Saving User to the Database");
+        // logger.LogInformation("Saving User to the Database");
 
         var newUser = await service.Save(user);
         

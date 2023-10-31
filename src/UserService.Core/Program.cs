@@ -5,12 +5,18 @@ using UserService.Service;
 using Domains;
 
 using System.Text.Json.Serialization;
+
+
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
 
-ConfigureServices(services);
-
+// ConfigureServices(services);
+    services.AddScoped<EfCoreUserRepository>();
+    services.AddScoped<IUserService, UserService.Service.UserService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(policy => { 
@@ -57,9 +63,7 @@ app.Run();
 
 void ConfigureServices(IServiceCollection services) { 
     services.AddScoped<EfCoreUserRepository>();
-    services.AddTransient<IUserService, UserService.Service.UserService>();
-
-
+    services.AddScoped<IUserService, UserService.Service.UserService>();
 }
 
 
