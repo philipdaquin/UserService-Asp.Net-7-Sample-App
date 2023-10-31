@@ -5,7 +5,7 @@ using UserService.Repository;
 namespace Domains;
 
 
-[Table("user")]
+[Table("users")]
 public class User: IEntity<int>
 {
     [Key]

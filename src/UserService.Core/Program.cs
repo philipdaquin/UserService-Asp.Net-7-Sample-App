@@ -63,7 +63,7 @@ app.Run();
 
 void ConfigureServices(IServiceCollection services) { 
     services.AddScoped<EfCoreUserRepository>();
-    services.AddScoped<IUserService, UserService.Service.UserService>();
+    services.AddTransient<IUserService, UserService.Service.UserService>();
 }
 
 
