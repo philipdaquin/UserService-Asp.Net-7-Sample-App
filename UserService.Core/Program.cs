@@ -61,3 +61,6 @@ void ConfigureServices(IServiceCollection services) {
 
 
 }
+
+
+public partial class Program {}

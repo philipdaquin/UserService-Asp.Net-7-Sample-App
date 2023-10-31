@@ -10,7 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="7.0.13" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.1" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.11" />
+    <PackageReference Include="Testcontainers" Version="3.5.0" />
+    <PackageReference Include="Testcontainers.PostgreSql" Version="3.5.0" />
     <PackageReference Include="xunit" Version="2.4.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -23,5 +28,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\UserService.Core\UserService.Core.csproj" />
+    <!-- <InternalsVisibleTo Include="..\..\UserService.Core\UserService.Core.csproj" /> -->
   </ItemGroup>
 </Project>
