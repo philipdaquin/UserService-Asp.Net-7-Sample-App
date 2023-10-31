@@ -34,15 +34,30 @@ builder.Services.AddDbContext<UserContext>(options=> {
     options.UseNpgsql(connectionString).UseUpperSnakeCaseNamingConvention();
     // options.UseSqlServer(connectionString).UseUpperSnakeCaseNamingConvention();
      }, ServiceLifetime.Transient);
+
+
 builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
+
+
+/*
+    Perform Automatic Database Migration 
+    - Fixed issues of migration 
+    - Without, your domain entities will not be created 
+*/
+using (var scope = app.Services.CreateScope())  { 
+    var db = scope.ServiceProvider.GetRequiredService<UserContext>();
+    db.Database.Migrate();
+}
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+
 
 
 app.UseHttpsRedirection();
