@@ -14,9 +14,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 var services = builder.Services;
 
-// ConfigureServices(services);
-    services.AddScoped<EfCoreUserRepository>();
-    services.AddScoped<IUserService, UserService.Service.UserService>();
+ConfigureServices(services);
+    // services.AddScoped<EfCoreUserRepository>();
+    // services.AddScoped<IUserService, UserService.Service.UserService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(policy => { 
