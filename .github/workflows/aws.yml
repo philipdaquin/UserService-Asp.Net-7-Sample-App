@@ -72,7 +72,7 @@ jobs:
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
-      working-directory: ./src/UserService.Core/
+      working-directory: src/UserService.Core/Dockerfile
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
