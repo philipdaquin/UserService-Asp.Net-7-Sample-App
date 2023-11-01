@@ -25,7 +25,7 @@ resource "aws_iam_role_policy_attachment" "ec2full_policy" {
 
 # attached aws ecr policy is attached
 
-resource "aws_iam_role_policy_attachment" "ecr_policy" {
+resource "aws_iam_role_policy_attachment" "ec2_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"
   role       = aws_iam_role.ec2.name
   
@@ -49,8 +49,12 @@ resource "aws_iam_role_policy_attachment" "iam_policy" {
   
   }
   
-resource "aws_iam_instance_profile" "jenkins_instance_profile" {
+resource "aws_iam_instance_profile" "instance_profile" {
   name  = "jenkins_instance_profile"
   role = "${aws_iam_role.ec2.name}"
 }
   
+resource "aws_iam_role_policy_attachment" "task_role" {
+  role       =  aws_iam_role.ec2.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}

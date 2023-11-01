@@ -3,6 +3,11 @@ resource "aws_ecs_service" "ecs_service" {
     cluster         = aws_ecs_cluster.ecs_cluster.id
     task_definition = aws_ecs_task_definition.ecs_task_definition.arn
     desired_count   = 2
+    scheduling_strategy = "REPLICA"
+
+
+    deployment_maximum_percent = 200
+    deployment_minimum_healthy_percent = 100
 
     network_configuration {
         subnets         = [aws_subnet.public_zone_1.id, aws_subnet.public_zone_2.id]
@@ -26,7 +31,7 @@ resource "aws_ecs_service" "ecs_service" {
 
     load_balancer {
         target_group_arn = aws_lb_target_group.ecs_tg.arn
-        container_name   = "dockergs"
+        container_name   = "${local.env}-ecs"
         container_port   = 80
     }
 

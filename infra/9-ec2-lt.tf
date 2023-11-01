@@ -1,12 +1,15 @@
 resource "aws_launch_template" "ecs_lt" {
   name_prefix   = "ecs-template"
-  image_id      = "ami-062c116e449466e7f"
-  instance_type = "t3.micro"
-
-  key_name               = "ec2ecsglog"
+  image_id      = data.aws_ami.ubuntu.image_id
+  instance_type = local.instance_type
+  key_name               = local.key_name
   vpc_security_group_ids = [aws_security_group.sg.id]
+  update_default_version = true
+  user_data = filebase64("${path.module}/ecs.sh")
+
+  
   iam_instance_profile {
-    name = "ecsInstanceRole"
+    name = aws_iam_instance_profile.instance_profile.name
   }
 
   block_device_mappings {
@@ -24,5 +27,4 @@ resource "aws_launch_template" "ecs_lt" {
     }
   }
 
-  user_data = filebase64("./ecs.sh")
 }
