@@ -2,10 +2,7 @@ resource "aws_security_group" "sg" {
     name   = "ubuntu_access"
     description = "Allow SSH inbound traffic"
     vpc_id = aws_vpc.main.id
-
-
     ingress {
-        // Allow SSH
         from_port   = 22
         to_port     = 22
         protocol    = "TCP"
