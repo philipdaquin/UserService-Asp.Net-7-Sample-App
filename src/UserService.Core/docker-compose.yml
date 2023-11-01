@@ -9,9 +9,9 @@ services:
     depends_on:
       postgres-db: 
         condition: service_started
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - DOTNET_ENVIRONMENT=Development
+    # environment:
+    #   - ASPNETCORE_ENVIRONMENT=Docker
+    #   - DOTNET_ENVIRONMENT=Docker
     networks:
       - user-service-local 
 
