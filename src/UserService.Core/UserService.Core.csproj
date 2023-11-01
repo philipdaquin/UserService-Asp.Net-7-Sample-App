@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <EnvironmentName>Development</EnvironmentName>
+    <RestorePackages>true</RestorePackages> 
+
   </PropertyGroup>
 
   <ItemGroup>
