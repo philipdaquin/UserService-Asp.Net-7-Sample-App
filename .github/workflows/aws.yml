@@ -31,14 +31,21 @@ on:
     branches: [ "master" ]
 
 env:
-  AWS_REGION: MY_AWS_REGION                   # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: MY_ECR_REPOSITORY           # set this to your Amazon ECR repository name
-  ECS_SERVICE: MY_ECS_SERVICE                 # set this to your Amazon ECS service name
-  ECS_CLUSTER: MY_ECS_CLUSTER                 # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION # set this to the path to your Amazon ECS task definition
-                                               # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: MY_CONTAINER_NAME           # set this to the name of the container in the
-                                               # containerDefinitions section of your task definition
+  # set this to your preferred AWS region, e.g. us-west-1
+  AWS_REGION: us-east-2                   
+  #set this to your Amazon ECR repository name
+  ECR_REPOSITORY: dev-ecr                
+  # set this to your Amazon ECS service name
+  ECS_SERVICE: my-ecs-service                 
+  # set this to your Amazon ECS cluster name
+  ECS_CLUSTER: my-ecs-cluster                 
+  # set this to the path to your Amazon ECS task definition
+  # file, e.g. .aws/task-definition.json
+  ECS_TASK_DEFINITION: .github/workflows/task-definition.json
+                                               
+  # set this to the name of the container in the
+  # containerDefinitions section of your task definition
+  CONTAINER_NAME: dev-ecs           
 
 permissions:
   contents: read
